@@ -15,7 +15,7 @@ List<Product> products = new List<Product>()
     Name = "Hockey Stick",
     Price = 12.97M,
     Sold = true,
-    StockDate = new DateTime(2023, 01, 20),
+    StockDate = new DateTime(2023, 06, 20),
     ManufactureYear = 2013,
     Condition = 3.4
   },
@@ -42,7 +42,7 @@ List<Product> products = new List<Product>()
     Name = "Tennis Ball",
     Price = 5.64M,
     Sold = false,
-    StockDate = new DateTime(2022, 6, 10),
+    StockDate = new DateTime(2023, 7, 13),
     ManufactureYear = 2015,
     Condition = 4.3
   },
@@ -68,7 +68,8 @@ while (choice != "0")
   Console.WriteLine(@"Choose an option:
   0. Exit
   1. View All Products
-  2. View Product Details");
+  2. View Product Details
+  3. View Latest Products");
   choice = Console.ReadLine();
   if (choice == "0")
   {
@@ -81,6 +82,10 @@ while (choice != "0")
   else if (choice == "2")
   {
     ViewProductDetails();
+  }
+  else if (choice == "3")
+  {
+    ViewLatestProducts();
   }
 }
 
@@ -136,4 +141,26 @@ void ListProducts()
   {
     Console.WriteLine($"{i + 1}. {products[i].Name}");
   }
+}
+
+void ViewLatestProducts()
+{
+    // create a new empty List to store the latest products
+    List<Product> latestProducts = new List<Product>();
+    // Calculate a DateTime 90 days in the past
+    DateTime threeMonthsAgo = DateTime.Now - TimeSpan.FromDays(90);
+    //loop through the products
+    foreach (Product product in products)
+    {
+        //Add a product to latestProducts if it fits the criteria
+        if (product.StockDate > threeMonthsAgo && !product.Sold)
+        {
+            latestProducts.Add(product);
+        }
+    }
+    // print out the latest products to the console 
+    for (int i = 0; i < latestProducts.Count; i++)
+    {
+        Console.WriteLine($"{i + 1}. {latestProducts[i].Name}");
+    }
 }
